@@ -1,14 +1,15 @@
 use std::{collections::HashMap, path::PathBuf};
 
 /// A file or folder indexed by the application.
+#[derive(Debug)]
 pub struct IndexedFile {
-    name: String,
+    pub name: String,
     /// The path to the file or folder.
-    path: PathBuf,
+    pub path: PathBuf,
     /// The size of the file or folder in bytes.
-    size: u64,
+    pub size: u64,
     /// Marker to idenitfy folder.
-    is_folder: bool,
+    pub is_folder: bool,
 }
 
 /// A list of files and folders indexed by the application.

@@ -12,11 +12,11 @@ pub enum UiMode {
     WarningMessage(FileToDelete),
 }
 
-pub struct App<B>
-where
-    B: Backend,
-{
-    pub is_running: bool,
-    pub is_loaded: bool,
-    pub ui_mode: UiMode,
-}
+// pub struct App<B>
+// where
+//     B: Backend,
+// {
+//     pub is_running: bool,
+//     pub is_loaded: bool,
+//     pub ui_mode: UiMode,
+// }

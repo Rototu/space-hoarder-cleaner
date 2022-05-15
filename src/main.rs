@@ -6,6 +6,9 @@ use anyhow;
 use clap::Parser;
 use crossterm::event::Event as BackEvent;
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
+use hoarder_management::index_service::index_folder;
+use hoarder_management::IndexedFile;
+use humansize::{file_size_opts, FileSize};
 use std::path::PathBuf;
 use std::process;
 use std::{env, io};
@@ -59,6 +62,8 @@ fn try_main() -> Result<(), anyhow::Error> {
             if !folder.as_path().is_dir() {
                 anyhow::bail!("Folder '{}' does not exist", folder.to_string_lossy())
             }
+            let res = index_folder(&folder, true);
+            print_results(&res)
             // start(
             //     terminal_backend,
             //     Box::new(terminal_events),
@@ -73,7 +78,7 @@ fn try_main() -> Result<(), anyhow::Error> {
     Ok(())
 }
 
-pub fn start<B>(
+fn start<B>(
     terminal_backend: B,
     terminal_events: Box<dyn Iterator<Item = BackEvent> + Send>,
     path: PathBuf,
@@ -82,4 +87,16 @@ pub fn start<B>(
 ) where
     B: Backend + Send + 'static,
 {
+}
+
+fn print_results(indexed_files: &Vec<IndexedFile>) {
+    for file in indexed_files.iter() {
+        println!(
+            "File name: {}\nIs folder: {}\nPath: {}\nSize {}\n",
+            file.name,
+            file.is_folder,
+            file.path.to_str().unwrap(),
+            file.size.file_size(file_size_opts::CONVENTIONAL).unwrap()
+        );
+    }
 }

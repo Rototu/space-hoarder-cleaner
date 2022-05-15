@@ -1,10 +1,12 @@
 use std::ffi::OsString;
 
+#[derive(Clone)]
 pub enum FileType {
     File,
     Folder,
 }
 
+#[derive(Clone)]
 pub struct FileMetadata {
     pub name: OsString,
     pub size: u128,
